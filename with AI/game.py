@@ -20,7 +20,7 @@ class Snake():
             food.reset(self,pixel_size,screen_width)
             self.frame_itiration=0
             self.tail.append(pygame.Rect(-500,-500,pixel_size-2,pixel_size-2))
-            return 10*self.size
+            return 10
         else:
             return 0
     def move(self,action,pixel_size,screen_width,screen_height,food):
@@ -38,7 +38,7 @@ class Snake():
         if self.state==action:
             reward = 0
         else:
-            reward = -1
+            reward = -0.1
         #test action
         if (action[0] and not (self.state[1])) or (action[1] and not (self.state[0]))or (action[2] and not (self.state[3]))or (action[3] and not (self.state[3])):
             self.state= action
@@ -62,7 +62,7 @@ class Snake():
         score = self.size
         if  self.is_lose(screen_width,screen_height) or self.frame_itiration>100*math.log(self.size+1):
             self.lose()
-            reward = -100
+            reward = -10
             game_over = True
         reward += self.eat(food,pixel_size,screen_width)
         return reward , game_over , score
