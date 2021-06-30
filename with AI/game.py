@@ -10,12 +10,14 @@ class Snake():
         self.snake_head_color= pygame.Color(0,100,0)
         self.size=1
         self.tail=[]
+        self.history= []
         self.state =  [0,0,0,1]
         self.frame_itiration=0
         self.head = pygame.Rect(1,1,pixel_size-2,pixel_size-2)
     def eat(self,food,pixel_size,screen_width):
         if abs(food.head.x-self.head.x)<5 and abs(food.head.y-self.head.y)<5:
             self.size+=1
+            self.history=[]
             food.reset(self,pixel_size,screen_width)
             self.frame_itiration=0
             self.tail.append(pygame.Rect(-500,-500,pixel_size-2,pixel_size-2))
@@ -55,19 +57,24 @@ class Snake():
         elif self.state[3]:
             #right
             self.head.x +=1*pixel_size
+        cp=[self.head.x,self.head.y]
+        
+        
         
          
         game_over = False
         score = self.size
-        if  self.is_lose(screen_width,screen_height) or self.frame_itiration>100*math.log(self.size+1):
+        if  self.is_lose(screen_width,screen_height) or self.frame_itiration>100*self.size or (cp in self.history):
             self.lose()
             reward = -10
             game_over = True
+        self.history.append(cp)
         reward += self.eat(food,pixel_size,screen_width)
         return reward , game_over , score
     def is_lose(self,screen_width,screen_height):
         return self.head.x<0 or self.head.y<0 or self.head.x>screen_width or self.head.y>screen_height or self.on_tail(self)
     def lose(self):
+        self.history=[]
         self.size = 1
         self.tail = []
         self.state =  [0,0,0,1]
