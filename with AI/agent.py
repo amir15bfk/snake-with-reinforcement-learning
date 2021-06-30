@@ -8,7 +8,7 @@ from model import Linear_QNet ,QTrainer
 from ploter import plot
 MAX_MEMORY = 100_000
 BATCH_SIZE = 1000
-LR = 0.0005
+LR = 0.001
 
 class Agent:
 
@@ -132,7 +132,7 @@ def train():
 
             if score > record :
                 record = score
-                agent.model.save('model_v6.pth')
+                agent.model.save('model_v7.pth')
             # TODO : plot
             plot_scores.append(score)
             total_score+= score

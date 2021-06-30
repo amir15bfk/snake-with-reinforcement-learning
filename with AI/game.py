@@ -64,7 +64,7 @@ class Snake():
          
         game_over = False
         score = self.size
-        if  self.is_lose(screen_width,screen_height) or self.frame_itiration>100*self.size :
+        if  self.is_lose(screen_width,screen_height):
             self.lose()
             reward = -10
             game_over = True
@@ -72,7 +72,7 @@ class Snake():
         reward += self.eat(food,pixel_size,screen_width)
         return reward , game_over , score
     def is_lose(self,screen_width,screen_height):
-        return self.head.x<0 or self.head.y<0 or self.head.x>screen_width or self.head.y>screen_height or self.on_tail(self) or ([self.head.x,self.head.y] in self.history)
+        return self.head.x<0 or self.head.y<0 or self.head.x>screen_width or self.head.y>screen_height or self.on_tail(self) or ([self.head.x,self.head.y] in self.history)or self.frame_itiration>100*self.size
     def lose(self):
         self.history=[]
         self.size = 1
