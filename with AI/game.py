@@ -16,7 +16,6 @@ class Snake():
     def eat(self,food,pixel_size,screen_width):
         if abs(food.head.x-self.head.x)<5 and abs(food.head.y-self.head.y)<5:
             self.size+=1
-            print(self.size)
             food.reset(self,pixel_size,screen_width)
             self.frame_itiration=0
             self.tail.append(pygame.Rect(-500,-500,pixel_size-2,pixel_size-2))
