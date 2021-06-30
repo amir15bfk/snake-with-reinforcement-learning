@@ -132,7 +132,7 @@ def train():
 
             if score > record :
                 record = score
-                agent.model.save('model_v8.pth')
+                agent.model.save('model_v9.pth')
             # TODO : plot
             plot_scores.append(score)
             total_score+= score

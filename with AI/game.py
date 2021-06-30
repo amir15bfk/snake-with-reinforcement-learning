@@ -68,6 +68,8 @@ class Snake():
             self.lose()
             reward = -10
             game_over = True
+            food.reset(self,pixel_size,screen_width)
+
         self.history.append([self.head.x,self.head.y])
         reward += self.eat(food,pixel_size,screen_width)
         return reward , game_over , score
@@ -81,6 +83,7 @@ class Snake():
         self.head.x = 1
         self.head.y = 1
         self.frame_itiration=0
+        food.reset(self,pixel_size,screen_width)
     def draw(self,screen):
         for i in range(self.size-1):
             x=100+(i+1)*10
@@ -123,6 +126,7 @@ class Game:
         self.clock = pygame.time.Clock()
 
         self.fast = True
+        self.visible = True
 
         # Setting up the main window
         self.screen_width = 1000
@@ -143,16 +147,19 @@ class Game:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_s:
                     self.fast = not self.fast
+                if event.key == pygame.K_v:
+                    self.visible = not self.visible
         self.snake.frame_itiration+=1
         reward ,game_over , score =  self.snake.move(action,self.pixel_size,self.screen_width,self.screen_height,self.food)
 
         # Draw
-        self.screen.fill(self.bg_color)
-        self.snake.draw(self.screen)
+        if self.visible:
+            self.screen.fill(self.bg_color)
+            self.snake.draw(self.screen)
 
-        pygame.draw.ellipse(self.screen,self.food.food_color,self.food.head)
-        # Updating the window
-        pygame.display.flip()
+            pygame.draw.ellipse(self.screen,self.food.food_color,self.food.head)
+            # Updating the window
+            pygame.display.flip()
         if self.fast:
             self.clock.tick(10000)
         else:
