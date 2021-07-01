@@ -74,7 +74,7 @@ class Snake():
         reward += self.eat(food,pixel_size,screen_width)
         return reward , game_over , score
     def is_lose(self,screen_width,screen_height):
-        return self.head.x<0 or self.head.y<0 or self.head.x>screen_width or self.head.y>screen_height or self.on_tail(self) or (self.history.count([self.head.x,self.head.y])>1)or self.frame_itiration>100*self.size
+        return self.head.x<0 or self.head.y<0 or self.head.x>screen_width or self.head.y>screen_height or self.on_tail(self) or (self.history.count([self.head.x,self.head.y])>10)or self.frame_itiration>100*self.size
     def lose(self):
         self.history=[]
         self.size = 1
@@ -162,7 +162,7 @@ class Game:
         if self.fast:
             self.clock.tick(10000)
         else:
-            self.clock.tick(30)
+            self.clock.tick(20)
         return reward,game_over , score-1
 
     
